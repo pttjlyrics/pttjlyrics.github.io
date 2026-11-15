@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Connecting … – PTTJ Studio</title><link rel="stylesheet" href="style.css"></head>
+<body><main>
+<h1>PTTJ <span>Studio</span></h1>
+<div class="card" id="msg">Connecting your TikTok account … / Verbinde dein TikTok-Konto …</div>
+<script>
+// TikTok-Login springt hierher zurück (Redirect URI). Der Code geht direkt weiter an die Zentrale auf dem eigenen PC –
+// diese Seite speichert nichts und schickt nichts an andere Server.
+const q = new URLSearchParams(location.search);
+const msg = document.getElementById('msg');
+if (q.get('error')) {
+  msg.textContent = 'TikTok: ' + (q.get('error_description') || q.get('error'));
+} else if (q.get('code')) {
+  location.replace('http://127.0.0.1:18765/app/tiktok.html?' + q.toString());
+  setTimeout(() => { msg.innerHTML = 'If nothing happens: open this link on the PC where PTTJ Studio runs. / Falls nichts passiert: diesen Link am PC mit der Zentrale öffnen.'; }, 4000);
+} else {
+  msg.textContent = 'Nothing to do here. / Hier gibt es nichts zu tun.';
+}
+</script>
+</main></body></html>
